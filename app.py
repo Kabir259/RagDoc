@@ -58,15 +58,22 @@ def main():
     # Sidebar for developer mode
     st.sidebar.title("Developer Mode")
     k = st.sidebar.slider("No. of references:", min_value=1, max_value=10, value=3)
+    st.sidebar.markdown("The number of references to include in the response.")
+    st.sidebar.markdown("---")
     similarity_threshold = st.sidebar.slider("Similarity threshold:", min_value=0.0, max_value=1.0, value=0.5, step=0.01)
+    st.sidebar.markdown("For a query with ```Similarity(query,data) <= Threshold```, the fallback response is triggered.")
+    st.sidebar.markdown("---")
     enable_history = st.sidebar.checkbox("Enable chat history", value=True)
+    st.sidebar.markdown("---")
+    
+    
 
     # Collapsible section for uploading PDFs
     with st.sidebar.expander("Upload PDF"):
         uploaded_files = st.file_uploader("Drag and drop your PDFs here", accept_multiple_files=True, type=["pdf"])
         if uploaded_files:
             for uploaded_file in uploaded_files:
-                with open(os.path.join("private/data", uploaded_file.name), "wb") as f:
+                with open(os.path.join("data/private", uploaded_file.name), "wb") as f:
                     f.write(uploaded_file.getbuffer())
                 st.write(f"Uploaded: {uploaded_file.name}")
             st.success("Files uploaded successfully!")
@@ -75,7 +82,7 @@ def main():
             populate_database()
 
     # Option to clear uploaded documents
-    if st.sidebar.button("Clear uploaded documents?"):
+    if st.sidebar.button("Clear uploaded documents & repopulate database"):
         clear_uploaded_documents()
         st.sidebar.success("Uploaded documents cleared and database repopulated with public data.")
 

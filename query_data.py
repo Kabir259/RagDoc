@@ -18,31 +18,40 @@ def query_rag(query_text: str, k: int, similarity_threshold: float) -> tuple[str
     # Search the DB
     results = db.similarity_search_with_score(query_text, k=k)
     
-    # Check if the highest similarity score is below the threshold
-    if results and results[0][1] < similarity_threshold:
-        return "Sorry, I didn’t understand your question. Do you want to connect with a live agent?", []
+    def distance_to_similarity(distance):
+        from math import exp
+        # Normalize to 0-1 range
+        normalized_distance = (distance - 100) / (600 - 100)  # Shift and scale to account for min distance
+        # Sigmoid function: 1/(1 + e^(ax)) where a controls steepness
+        return 1 / (1 + exp(0.25 * normalized_distance))
 
-    context_text = "\n\n---\n\n".join([doc.page_content for doc, _score in results])
+# Convert the score
+    similarity_score = distance_to_similarity(results[0][1]) if results else 0.0
     
-    # Generate response
-    prompt_template = ChatPromptTemplate.from_template(PROMPT_TEMPLATE)
-    messages = prompt_template.format_messages(context=context_text, question=query_text)
-    
-    # Get response from Ollama
-    llm = Ollama(model="llama3.1")
-    response = llm.invoke(messages)
-    
-    # Extract sources
-    sources = [
-        {
-            "id": doc.metadata.get("id"),
-            "source": doc.metadata.get("source"),
-            "page": doc.metadata.get("page")
-        }
-        for doc, _score in results
-    ]
-    
-    return response, sources
+    if not results or (similarity_score < similarity_threshold):
+        return f"Sorry, I didn't understand your question (Similarity: {similarity_score:.3f} < {similarity_threshold}). Do you want to connect with a live agent?", []
+    else:
+        context_text = "\n\n---\n\n".join([doc.page_content for doc, _score in results])
+        
+        prompt_template = ChatPromptTemplate.from_template(PROMPT_TEMPLATE)
+        messages = prompt_template.format_messages(context=context_text, question=query_text)
+        
+        llm = Ollama(model="llama3.1")
+        response = llm.invoke(messages)
+        
+        response = f"{response}\n\n*Similarity: {similarity_score:.3f}*"
+        
+        # Extract sources
+        sources = [
+            {
+                "id": doc.metadata.get("id"),
+                "source": doc.metadata.get("source"), 
+                "page": doc.metadata.get("page")
+            }
+            for doc, _score in results
+        ]
+        
+        return response, sources
 
 def main():
     parser = argparse.ArgumentParser()
