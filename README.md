@@ -55,14 +55,13 @@ If you don't have Conda installed, download and install it from the official web
 ## 5. Create Conda Environment
 Create a new Conda environment for the project:
 ```sh
-conda create --name rag-chatbot python=3.9
+conda env create -f environment.yml
 ```
 
 ## 6. Activate Conda Environment and Install Requirements
 Activate the Conda environment and install the required packages:
 ```sh
-conda activate rag-chatbot
-pip install -r requirements.txt
+conda activate chatbot
 ```
 
 ## 7. Ensure Data Folder is Filled
