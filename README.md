@@ -38,7 +38,7 @@ First, download and install Ollama from the official website: [Ollama](https://o
 Open your terminal and download the required models:
 
 ```sh
-ollama pull llama3.1b
+ollama pull llama3.1
 ollama pull nomic-embed-text
 ```
 
