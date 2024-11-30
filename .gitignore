@@ -1,0 +1,7 @@
+*.pyc
+.DS_Store
+backup
+chroma
+chroma_backup
+.pytest_cache
+__pycache__
