@@ -13,8 +13,6 @@
 
 
 By ```Kabir Kumar``` | ```ee3210741@iitd.ac.in``` | ```2021EE30741``` | ```IIT Delhi```  
-[//]: # For **Apport AI Engineer Shortlisting Project**
-
 
 
 # Project Overview
@@ -24,6 +22,18 @@ This project is a RAG (Retrieval-Augmented Generation) chatbot that uses a combi
 # Screenshot of Deployed App
 
 <img src="assets/ss.png">
+  
+<br>
+
+<img src="assets/ss2.png">
+  
+<br>
+
+<img src="assets/ss3.png">
+  
+<br>
+
+<img src="assets/ss4.png">
   
 <br>
 
