@@ -38,9 +38,13 @@ This project is a RAG (Retrieval-Augmented Generation) chatbot that uses a combi
 <br>
 
 
-# Architecture
+# Architecture and Pipeline
 
 <img src="assets/arch.png">
+  
+<br>
+
+<img src="assets/pipeline.png">
   
 <br>
 
