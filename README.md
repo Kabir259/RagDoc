@@ -19,7 +19,7 @@ By ```Kabir Kumar``` | ```ee3210741@iitd.ac.in``` | ```2021EE30741``` | ```IIT D
 
 This project is a RAG (Retrieval-Augmented Generation) chatbot that uses a combination of document embeddings and a language model to answer questions based on the provided context i.e. PDFs. The chatbot is built using Streamlit for the frontend and Chroma for vector storage.
 
-# Screenshot of Deployed App
+# Screenshots of the Deployed App
 
 <img src="assets/ss.png">
   
